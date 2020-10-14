@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import Chart, {ArgumentAxis, CommonSeriesSettings, Grid, Legend, Margin, Series, Tooltip} from 'devextreme-react/chart'
 
 
-class UrbanChart extends React.Component {
+export default class UrbanGraph extends React.Component {
 
     _data;
 
@@ -20,10 +21,11 @@ class UrbanChart extends React.Component {
     }
 
     render(){
+        //assign props.data in 
         return (
             <div style={{margin: "20px", padding: "10px"}}>
                 <Chart palette="Soft Pastel" dataSource={this._data} title="Just some random data">
-                    <CommonSeriesSettings argumentField="firstName" type="bar"/>
+                    <CommonSeriesSettings argumentField="firstName" type={this.props.graphType}/>
                     <Series valueField="age" key="1" name="Age"/>
                     <Series valueField="hourServed" key="2" name="Hours Served"/>
                     <Series valueField="id" key="3" name="ID"/>
@@ -39,4 +41,8 @@ class UrbanChart extends React.Component {
     }
 }
 
-export default UrbanChart
+UrbanGraph.propTypes = {
+    data: PropTypes.array.isRequired,
+    graphType: PropTypes.oneOf(['bar', 'line', 'spline', 'stackedBar', 'area']).isRequired
+}
+

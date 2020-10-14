@@ -8,9 +8,11 @@
     "@testing-library/user-event": "^7.1.2",
     "devextreme": "^20.1.7",
     "devextreme-react": "^20.1.7",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-select": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
