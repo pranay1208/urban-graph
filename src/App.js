@@ -2,40 +2,37 @@ import React from 'react';
 import './App.css';
 import UrbanGraph from './UrbanGraph/UrbanGraph'
 import data from './data'
-import Select from 'react-select'
+import Form from './Helpers/Form'
 
 
-const graphTypeOptions = [
-  { value: 'line', label: 'Line Graph' },
-  { value: 'spline', label: 'Spline Chart' },
-  { value: 'bar', label: 'Bar Graph' },
-  { value: 'stackedBar', label: 'Stacked Bar Graph' },
-  { value: 'area', label: 'Area Graph' },
-]
+
+const seriesOptions = Object.keys(data.gotData[1]).map((value)=>{
+  return {
+    value: value,
+    label: value
+  }
+})
 
 
 class App extends React.Component {
 
   state = {
-    graphType: null
+    graphType: "",
+    listOfSeries: []
   }
 
-  changeGraphType = graphType => {
-    this.setState({graphType: graphType.value})
+  onSubmit = (fields) => {
+    this.setState({
+      ...fields
+    })
   }
 
   render(){
     return (
       <div className="App">
-        <div style={{width: "30%", margin: "10px"}}>
-          <Select value={this.state.graphType} 
-            onChange={this.changeGraphType} 
-            options={graphTypeOptions} 
-            placeholder="Select graph type" 
-            defaultValue="line"/>
-        </div>
+        <Form seriesOptions={seriesOptions} onSubmit={fields => this.onSubmit(fields)}/>
         <br/>
-        <UrbanGraph data={data.gotData} graphType={this.state.graphType}/>
+        <UrbanGraph data={data.gotData} graphType={this.state.graphType} seriesList={this.state.listOfSeries}/>
       </div>
     );
   }

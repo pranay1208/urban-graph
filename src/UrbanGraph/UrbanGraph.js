@@ -10,25 +10,19 @@ export default class UrbanGraph extends React.Component {
     constructor(props){
         super(props)
         this._data = this.props.data
-        .map((item)=>{
-            let newItem = {
-                ...item
-            }
-            newItem.id = item.id*10
-            return newItem
-        })
-        console.log(this._data)
     }
 
     render(){
-        //assign props.data in 
+        let listOfSeries = this.props.seriesList.map((value, index)=>{
+            console.log(value)
+            return <Series valueField={value} key={index} name={value}/>
+        })
+        console.log(listOfSeries)
         return (
             <div style={{margin: "20px", padding: "10px"}}>
                 <Chart palette="Soft Pastel" dataSource={this._data} title="Just some random data">
                     <CommonSeriesSettings argumentField="firstName" type={this.props.graphType}/>
-                    <Series valueField="age" key="1" name="Age"/>
-                    <Series valueField="hourServed" key="2" name="Hours Served"/>
-                    <Series valueField="id" key="3" name="ID"/>
+                    {listOfSeries}
                     <ArgumentAxis valueMarginsEnabled={true} discreteAxisDivisionMode="crossLabels">
                         <Grid visible={true}/>
                     </ArgumentAxis>
