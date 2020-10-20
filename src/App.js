@@ -32,7 +32,8 @@ class App extends React.Component {
       <div className="App">
         <Form seriesOptions={seriesOptions} onSubmit={fields => this.onSubmit(fields)}/>
         <br/>
-        <UrbanGraph data={data.gotData} graphType={this.state.graphType} seriesList={this.state.listOfSeries}/>
+        <UrbanGraph data={data.gotData} graphType={this.state.graphType} 
+          seriesList={this.state.listOfSeries} colourTheme=""/>
       </div>
     );
   }

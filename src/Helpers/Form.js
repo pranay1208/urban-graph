@@ -7,6 +7,8 @@ const graphTypeOptions = [
     { value: 'bar', label: 'Bar Graph' },
     { value: 'stackedBar', label: 'Stacked Bar Graph' },
     { value: 'area', label: 'Area Graph' },
+    { value: 'pie', label: 'Pie Chart' },
+    { value: 'doughnut', label: 'Doughnut Graph' },
   ]
 
 class Form extends React.Component {
@@ -29,12 +31,13 @@ class Form extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault()
-        for(let i=0; i<this.state.listOfSeries.length; i++){
-            if(this.state.listOfSeries[i] === ""){
-                this.state.listOfSeries[i] = this.props.seriesOptions[0]
+        let objectToPass = {...this.state}
+        for(let i=0; i<objectToPass.listOfSeries.length; i++){
+            if(objectToPass.listOfSeries[i] === ""){
+                objectToPass.listOfSeries[i] = this.props.seriesOptions[0].value
             }
         }
-        this.props.onSubmit(this.state)
+        this.props.onSubmit(objectToPass)
     }
 
     changeSeries = (e,index) => {
