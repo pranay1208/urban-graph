@@ -51,13 +51,56 @@ export default class UrbanGraph extends React.Component {
         );
     }
 
-    needForNumeration(data, seriesList) {
-        
+    needForNumeration(propsData, propsSeriesList, givenArgumentAxis) {
+        let data = JSON.parse(JSON.stringify({propsData})).propsData
+        let seriesList = [...propsSeriesList]
+        const uniqueSeries = seriesList.filter((value,index, self) => self.indexOf(value)===index)
+
+        for(let i=0; i < uniqueSeries.length; i++){
+            const uniqSeriesVal = uniqueSeries[i];
+
+            if(typeof data[0][uniqSeriesVal] === "number"){
+                seriesList = seriesList.map(value => {
+                    if(value !== uniqSeriesVal) return value
+                    return {arg: givenArgumentAxis, val: value}
+                })
+                continue
+            }
+            
+            let valCounter = {}
+            data.forEach(entry=>{
+                const value = entry[uniqSeriesVal].toString()
+                if(value in valCounter){
+                    valCounter[value]++
+                } else {
+                    valCounter[value] = 1
+                }
+            })
+            const keyValPairs = Object.entries(valCounter)
+            const nameOfArgumentAxis = `UrbanGraphArgAxis:${uniqSeriesVal}`
+            const nameOfValueAxis = `UrbanGraphValAxis:${uniqSeriesVal}`
+            for(let i=0; i<keyValPairs.length; i++){
+                const [key, val] = keyValPairs[i]
+                data[i] = {
+                    ...data[i],
+                    [nameOfArgumentAxis]: key,
+                    [nameOfValueAxis]: val
+                }
+            }
+            seriesList = seriesList.map(value => {
+                if(value!== uniqSeriesVal) return value
+                return {arg: nameOfArgumentAxis, val: nameOfValueAxis}
+            })
+        }
+
+        return {
+            _seriesList: seriesList,
+            _data: data
+        }
     }
 
     makePieChart(){
-        let {_seriesList, _data} = this.needForNumeration(this.props.data, this.props.seriesList)
-        // *Series list will be [{arg: arg, val:val}]
+        let {_seriesList, _data} = this.needForNumeration(this.props.data, this.props.seriesList, this.props.argumentAxis)
         return (
             <PieChart
                 id="pie"

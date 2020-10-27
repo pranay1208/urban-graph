@@ -19,7 +19,7 @@ class App extends React.Component {
   state = {
     graphType: "",
     listOfSeries: [],
-    argumentAxis: []
+    argumentAxis: ""
   }
 
   onSubmit = (fields) => {
