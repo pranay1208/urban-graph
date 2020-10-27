@@ -1,6 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Urban Graph
+This is my first shot at creating an npm package. You can find the package [here](https://www.npmjs.com/package/urban_graph) to see installation and usage instructions.
 A React component that abstracts painstaking graph creation into a single class with easy-to-use props and a variety of customisation possiblities.
 
 ## Usage
