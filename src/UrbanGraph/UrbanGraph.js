@@ -18,7 +18,6 @@ export default class UrbanGraph extends React.Component {
 
     constructor(props){
         super(props)
-        this._data = this.props.data
         this.makeChart = this.makeChart.bind(this)
         this.makePieChart = this.makePieChart.bind(this)
     }
@@ -34,9 +33,10 @@ export default class UrbanGraph extends React.Component {
     }
 
     makeChart(){
+        let _data = this.props.data
         return (
-            <Chart palette={this.props.colourTheme} dataSource={this._data} title="Just some random data">
-                <CommonSeriesSettings argumentField="firstName" type={this.props.graphType}/>
+            <Chart palette={this.props.colourTheme} dataSource={_data} title="Just some random data">
+                <CommonSeriesSettings argumentField={this.props.argumentAxis} type={this.props.graphType}/>
                 {this.props.seriesList.map((value, index)=>{
                     return <Series valueField={value} key={index} name={value}/>
                 })}
@@ -51,11 +51,17 @@ export default class UrbanGraph extends React.Component {
         );
     }
 
+    needForNumeration(data, seriesList) {
+        
+    }
+
     makePieChart(){
+        let {_seriesList, _data} = this.needForNumeration(this.props.data, this.props.seriesList)
+        // *Series list will be [{arg: arg, val:val}]
         return (
             <PieChart
                 id="pie"
-                dataSource={this._data}
+                dataSource={_data}
                 palette={this.props.colourTheme}
                 title="Just some random data"
                 type={this.props.graphType}
@@ -63,8 +69,8 @@ export default class UrbanGraph extends React.Component {
                 // onPointClick={this.pointClickHandler}
                 // onLegendClick={this.legendClickHandler}
             >
-                {this.props.seriesList.map((value,index)=>{
-                    return <PSeries argumentField="firstName" valueField={value}>
+                {_seriesList.map((value,index)=>{
+                    return <PSeries key={index} argumentField={value.arg} valueField={value.val}>
                         <PLabel visible={true}>
                             <PConnector width={1} visible={true}/>
                         </PLabel>
@@ -92,6 +98,7 @@ UrbanGraph.propTypes = {
     data: PropTypes.array.isRequired,
     graphType: PropTypes.oneOf(['bar', 'line', 'spline', 'stackedBar', 'area', 'pie', 'doughnut']).isRequired,
     seriesList: PropTypes.arrayOf(PropTypes.string),
-    colourTheme: PropTypes.string
+    colourTheme: PropTypes.string,
+    argumentAxis: PropTypes.string //for line graphs's y-axis, and when pie's value has number in it already
 }
 

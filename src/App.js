@@ -18,7 +18,8 @@ class App extends React.Component {
 
   state = {
     graphType: "",
-    listOfSeries: []
+    listOfSeries: [],
+    argumentAxis: []
   }
 
   onSubmit = (fields) => {
@@ -33,7 +34,7 @@ class App extends React.Component {
         <Form seriesOptions={seriesOptions} onSubmit={fields => this.onSubmit(fields)}/>
         <br/>
         <UrbanGraph data={data.gotData} graphType={this.state.graphType} 
-          seriesList={this.state.listOfSeries} colourTheme=""/>
+          seriesList={this.state.listOfSeries} colourTheme="Bright" argumentAxis={this.state.argumentAxis}/>
       </div>
     );
   }
