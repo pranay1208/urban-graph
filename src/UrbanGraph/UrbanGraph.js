@@ -10,12 +10,10 @@ import PieChart, {
   } from 'devextreme-react/pie-chart';
 import Paper from '@material-ui/core/Paper'
 
-export default class UrbanGraph extends React.Component {
+class UrbanGraph extends React.Component {
 
     //TODO: Implement Crosshairs, Export and other such optional components
     //TODO: Implement bullet and non-line/non-pie chart funcitonality
-    _data;
-
     constructor(props){
         super(props)
         this.makeChart = this.makeChart.bind(this)
@@ -35,7 +33,7 @@ export default class UrbanGraph extends React.Component {
     makeChart(){
         let _data = this.props.data
         return (
-            <Chart palette={this.props.colourTheme} dataSource={_data} title="Just some random data">
+            <Chart palette={this.props.colourTheme} dataSource={_data} title={this.props.title}>
                 <CommonSeriesSettings argumentField={this.props.argumentAxis} type={this.props.graphType}/>
                 {this.props.seriesList.map((value, index)=>{
                     return <Series valueField={value} key={index} name={value}/>
@@ -106,7 +104,7 @@ export default class UrbanGraph extends React.Component {
                 id="pie"
                 dataSource={_data}
                 palette={this.props.colourTheme}
-                title="Just some random data"
+                title={this.props.title}
                 type={this.props.graphType}
                 style={{width:"50%", margin:"auto"}}
                 // onPointClick={this.pointClickHandler}
@@ -142,6 +140,8 @@ UrbanGraph.propTypes = {
     graphType: PropTypes.oneOf(['bar', 'line', 'spline', 'stackedBar', 'area', 'pie', 'doughnut']).isRequired,
     seriesList: PropTypes.arrayOf(PropTypes.string),
     colourTheme: PropTypes.string,
-    argumentAxis: PropTypes.string //for line graphs's y-axis, and when pie's value has number in it already
+    argumentAxis: PropTypes.string, //for line graphs's y-axis, and when pie's value has number in it already
+    title: PropTypes.string
 }
 
+export default UrbanGraph

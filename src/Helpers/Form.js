@@ -15,7 +15,8 @@ class Form extends React.Component {
     state = {
         graphType: "",
         listOfSeries: [""],
-        argumentAxis: ""
+        argumentAxis: "",
+        title: ""
     }
 
     formBuild = (name, placeholder, options) => {
@@ -77,6 +78,10 @@ class Form extends React.Component {
         return(
             <div style={{textAlign:"center", width:"100%", margin: "10px"}}>
                 <form onSubmit={this.onSubmit}>
+                    <div>
+                        <label style={{paddingRight: "5px"}}>Title</label>
+                        <input name="title" onChange={this.onChange} placeholder="Title of graph" value={this.state.title}></input>
+                    </div>
                     <div>
                         <label style={{paddingRight: "7px"}}>Type of Graph</label>
                         <select name="graphType" onChange={this.onChange} placeholder="Select Graph Type" value={this.state.graphType}>
