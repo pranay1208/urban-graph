@@ -3,7 +3,7 @@ import './App.css';
 import UrbanGraph from './UrbanGraph/UrbanGraph'
 import data from './data'
 import Form from './Helpers/Form'
-import UG from 'urban_graph'
+// import UG from 'urban_graph'
 
 
 
@@ -21,6 +21,7 @@ class App extends React.Component {
     graphType: "",
     listOfSeries: [],
     argumentAxis: "",
+    title: ""
   }
 
   onSubmit = (fields) => {
@@ -35,10 +36,10 @@ class App extends React.Component {
         <Form seriesOptions={seriesOptions} onSubmit={fields => this.onSubmit(fields)}/>
         <br/>
         <UrbanGraph data={data.gotData} graphType={this.state.graphType} 
-          seriesList={this.state.listOfSeries} colourTheme="Bright" argumentAxis={this.state.argumentAxis} title={this.state.title}/>
+          seriesList={this.state.listOfSeries} colourTheme="Bright" argumentAxis={this.state.argumentAxis} title={this.state.title}
+          aggregate export
+        />
         <br/>
-        <UG data={data.gotData} graphType={this.state.graphType} 
-          seriesList={this.state.listOfSeries} colourTheme="Bright" argumentAxis={this.state.argumentAxis} />
       </div>
     );
   }

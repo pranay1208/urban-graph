@@ -9,6 +9,7 @@ import PieChart, {
     Export as PExport
   } from 'devextreme-react/pie-chart';
 import Paper from '@material-ui/core/Paper'
+import dataAggregate from './dataAggregators'
 
 class UrbanGraph extends React.Component {
 
@@ -31,11 +32,13 @@ class UrbanGraph extends React.Component {
     }
 
     makeChart(){
-        let _data = this.props.data
+        let {_data, _seriesList, _argAxis} = dataAggregate.needForNumerationChart(
+            this.props.data, this.props.seriesList, this.props.argumentAxis, this.props.aggregate
+            )
         return (
             <Chart palette={this.props.colourTheme} dataSource={_data} title={this.props.title}>
-                <CommonSeriesSettings argumentField={this.props.argumentAxis} type={this.props.graphType}/>
-                {this.props.seriesList.map((value, index)=>{
+                <CommonSeriesSettings argumentField={_argAxis} type={this.props.graphType}/>
+                {_seriesList.map((value, index)=>{
                     return <Series valueField={value} key={index} name={value}/>
                 })}
                 <ArgumentAxis valueMarginsEnabled={true} discreteAxisDivisionMode="crossLabels">
@@ -44,61 +47,13 @@ class UrbanGraph extends React.Component {
                 <Margin bottom={20}/>
                 <Legend verticalAlignment="top" horizontalAlignment="center" itemTextPosition="top"/>
                 <Tooltip enabled={true}/>
-                <Export enabled={true}/>
+                <Export enabled={this.props.export}/>
             </Chart>
         );
     }
 
-    needForNumeration(propsData, propsSeriesList, givenArgumentAxis) {
-        let data = JSON.parse(JSON.stringify({propsData})).propsData
-        let seriesList = [...propsSeriesList]
-        const uniqueSeries = seriesList.filter((value,index, self) => self.indexOf(value)===index)
-
-        for(let i=0; i < uniqueSeries.length; i++){
-            const uniqSeriesVal = uniqueSeries[i];
-
-            if(typeof data[0][uniqSeriesVal] === "number"){
-                seriesList = seriesList.map(value => {
-                    if(value !== uniqSeriesVal) return value
-                    return {arg: givenArgumentAxis, val: value}
-                })
-                continue
-            }
-            
-            let valCounter = {}
-            data.forEach(entry=>{
-                const value = entry[uniqSeriesVal].toString()
-                if(value in valCounter){
-                    valCounter[value]++
-                } else {
-                    valCounter[value] = 1
-                }
-            })
-            const keyValPairs = Object.entries(valCounter)
-            const nameOfArgumentAxis = `UrbanGraphArgAxis:${uniqSeriesVal}`
-            const nameOfValueAxis = `UrbanGraphValAxis:${uniqSeriesVal}`
-            for(let i=0; i<keyValPairs.length; i++){
-                const [key, val] = keyValPairs[i]
-                data[i] = {
-                    ...data[i],
-                    [nameOfArgumentAxis]: key,
-                    [nameOfValueAxis]: val
-                }
-            }
-            seriesList = seriesList.map(value => {
-                if(value!== uniqSeriesVal) return value
-                return {arg: nameOfArgumentAxis, val: nameOfValueAxis}
-            })
-        }
-
-        return {
-            _seriesList: seriesList,
-            _data: data
-        }
-    }
-
     makePieChart(){
-        let {_seriesList, _data} = this.needForNumeration(this.props.data, this.props.seriesList, this.props.argumentAxis)
+        let {_seriesList, _data} = dataAggregate.needForNumerationPie(this.props.data, this.props.seriesList, this.props.argumentAxis, this.props.aggregate)
         return (
             <PieChart
                 id="pie"
@@ -118,7 +73,7 @@ class UrbanGraph extends React.Component {
                     </PSeries>
                 })}
                 <PSize width={500} />
-                <PExport enabled={true} />
+                <PExport enabled={this.props.export} />
             </PieChart>
         )
     }
@@ -137,11 +92,20 @@ class UrbanGraph extends React.Component {
 
 UrbanGraph.propTypes = {
     data: PropTypes.array.isRequired,
-    graphType: PropTypes.oneOf(['bar', 'line', 'spline', 'stackedBar', 'area', 'pie', 'doughnut']).isRequired,
+    graphType: PropTypes.oneOf(['bar', 'line', 'spline', 'stackedBar', 'area', 'pie', 'doughnut']),
     seriesList: PropTypes.arrayOf(PropTypes.string),
     colourTheme: PropTypes.string,
     argumentAxis: PropTypes.string, //for line graphs's y-axis, and when pie's value has number in it already
-    title: PropTypes.string
+    title: PropTypes.string,
+    aggregate: PropTypes.bool,
+    export: PropTypes.bool
+}
+
+UrbanGraph.defaultProps = {
+    export: false,
+    aggregate: false,
+    graphType: "line",
+    colourTheme: "Bright"
 }
 
 export default UrbanGraph
