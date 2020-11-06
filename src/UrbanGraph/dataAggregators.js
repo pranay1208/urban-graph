@@ -78,7 +78,6 @@ function needForNumerationChart(propsData, propsSeriesList, givenArgumentAxis, a
     }
     for(let [key, value] of Object.entries(valCounter)){
         for(let series of uniqueSeries) {
-            console.log(series, value)
             if(!(series in value)){
                 console.log("series not in val") 
                 value[series] = 0 

@@ -5,6 +5,8 @@ import data from './data'
 import Form from './Helpers/Form'
 // import UG from 'urban_graph'
 
+//! Add checkboxes to form for export and aggregate
+
 
 
 const seriesOptions = Object.keys(data.gotData[1]).map((value)=>{
@@ -21,7 +23,9 @@ class App extends React.Component {
     graphType: "",
     listOfSeries: [],
     argumentAxis: "",
-    title: ""
+    title: "",
+    aggregate: false,
+    export: false,
   }
 
   onSubmit = (fields) => {
@@ -37,7 +41,7 @@ class App extends React.Component {
         <br/>
         <UrbanGraph data={data.gotData} graphType={this.state.graphType} 
           seriesList={this.state.listOfSeries} colourTheme="Bright" argumentAxis={this.state.argumentAxis} title={this.state.title}
-          aggregate export
+          aggregate={this.state.aggregate} export={this.state.export}
         />
         <br/>
       </div>

@@ -16,7 +16,9 @@ class Form extends React.Component {
         graphType: "",
         listOfSeries: [""],
         argumentAxis: "",
-        title: ""
+        title: "",
+        aggregate: false,
+        export: false
     }
 
     formBuild = (name, placeholder, options) => {
@@ -50,6 +52,12 @@ class Form extends React.Component {
         })
     }
 
+    onToggle = e => {
+        this.setState({
+            [e.target.name]: !this.state[e.target.name]
+        })
+    }
+
     onSubmit = (e) => {
         e.preventDefault()
         let objectToPass = {...this.state}
@@ -80,7 +88,10 @@ class Form extends React.Component {
                 <form onSubmit={this.onSubmit}>
                     <div>
                         <label style={{paddingRight: "5px"}}>Title</label>
-                        <input name="title" onChange={this.onChange} placeholder="Title of graph" value={this.state.title}></input>
+                        <input name="title" onChange={this.onChange} placeholder="Title of graph" value={this.state.title}
+                            style={{marginRight: "20px"}}></input>
+                        <label for="export">Exportable</label>
+                        <input name="export" type="checkbox" onChange={this.onToggle}></input>
                     </div>
                     <div>
                         <label style={{paddingRight: "7px"}}>Type of Graph</label>
@@ -92,12 +103,15 @@ class Form extends React.Component {
                     </div>
                     <br/>
                     <div>
-                        <label style={{paddingRight: "7px"}}>Argument Axis</label>
-                        <select name="argumentAxis" value={this.state.argumentAxis} onChange={this.onChange} placeholder="Argument Axis">
+                        <label style={{paddingRight: "7px"}} for="argumentAxis">Argument Axis</label>
+                        <select name="argumentAxis" value={this.state.argumentAxis} onChange={this.onChange} placeholder="Argument Axis"
+                            style={{marginRight: "20px"}}>
                             {this.props.seriesOptions.map((option,index)=>{
                                 return <option value={option.value} key={index}>{option.label}</option>
                             })}
                         </select>
+                        <label for="aggegrate">Aggregate Values</label>
+                        <input type="checkbox" id="aggregate" name="aggregate" onChange={this.onToggle}></input>
                     </div>
                     <br/>
                     {this.formBuild("listOfSeries", "List of Series", this.props.seriesOptions)}
