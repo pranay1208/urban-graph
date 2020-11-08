@@ -5,10 +5,6 @@ import data from './data'
 import Form from './Helpers/Form'
 // import UG from 'urban_graph'
 
-//! Add checkboxes to form for export and aggregate
-
-
-
 const seriesOptions = Object.keys(data.gotData[1]).map((value)=>{
   return {
     value: value,

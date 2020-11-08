@@ -7,7 +7,6 @@ A React component that abstracts painstaking graph creation into a single class 
 # Installation
 
 Use `npm i urban_graph --save` to install and save the package.
-After installation, you may access the package using
 
 ## Usage
 
@@ -47,9 +46,23 @@ class ABC extends React.Component {
 
 In a pie-chart, if the seriesList contains a key with non-numeric values, UrbanGraph will count the number of occurrences of each unique value and display the number as the value, and the attribute as the argument axis. If aggregate is selected, even numeric values will be counted based on values. **_Italicised graph types are pie-like graphs_**
 
-
 ### Using the repository
-To use this current repository, use `npm start` or `yarn start` in the terminal, at the root of this project to start the development server on https://localhost:3000. 
+
+To use this current repository, use `npm start` or `yarn start` in the terminal, at the root of this project to start the development server on https://localhost:3000.
 Any saved changes made to the source code will cause the development build to refresh with the changes implemented.
 
 You may look at the source code for [UrbanGraph.js](./src/UrbanGraph/UrbanGraph.js) to understand the prop requirements through the chart implementation or usage of PropTypes at the bottom of the file.
+
+## Example
+
+The above code gives the following graph... _all graphs are made from the same data set shown in Usage section_
+![line graph](assets/line.png)
+
+Aggregated x-y chart
+![aggregated line graph](assets/line_aggr.png)
+
+Pie charts with numeric attribute value
+![pie chart](assets/pie.png)
+
+Pie charts with non-numeric attribute value
+![aggregated pie chart](assets/pie_aggr.png)
