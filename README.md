@@ -34,7 +34,7 @@ class ABC extends React.Component {
 }
 ```
 
-## Options
+# Options
 
 - title is the title of the graph (**string**)
 - data is the list of data objects that the graph will be built on (**list of objects**)
@@ -53,7 +53,7 @@ Any saved changes made to the source code will cause the development build to re
 
 You may look at the source code for [UrbanGraph.js](./src/UrbanGraph/UrbanGraph.js) to understand the prop requirements through the chart implementation or usage of PropTypes at the bottom of the file.
 
-## Example
+# Example
 
 The above code gives the following graph... _all graphs are made from the same data set shown in Usage section_
 ![line graph](assets/line.png)
