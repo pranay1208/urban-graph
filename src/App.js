@@ -22,6 +22,7 @@ class App extends React.Component {
     title: "",
     aggregate: false,
     export: false,
+    crosshair: false
   }
 
   onSubmit = (fields) => {
@@ -37,9 +38,13 @@ class App extends React.Component {
         <br/>
         <UrbanGraph data={data.gotData} graphType={this.state.graphType} 
           seriesList={this.state.listOfSeries} colourTheme="Bright" argumentAxis={this.state.argumentAxis} title={this.state.title}
-          aggregate={this.state.aggregate} export={this.state.export}
+          aggregate={this.state.aggregate} export={this.state.export} crosshair = {this.state.crosshair}
         />
         <br/>
+        {/* <UG data={data.gotData} graphType={this.state.graphType} 
+          seriesList={this.state.listOfSeries} colourTheme="Bright" argumentAxis={this.state.argumentAxis} title={this.state.title}
+          aggregate={this.state.aggregate} export={this.state.export} crosshair = {this.state.crosshair}
+        /> */}
       </div>
     );
   }

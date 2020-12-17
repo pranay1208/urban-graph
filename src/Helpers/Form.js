@@ -18,7 +18,8 @@ class Form extends React.Component {
         argumentAxis: "",
         title: "",
         aggregate: false,
-        export: false
+        export: false,
+        crosshair: false
     }
 
     formBuild = (name, placeholder, options) => {
@@ -112,6 +113,8 @@ class Form extends React.Component {
                         </select>
                         <label for="aggegrate">Aggregate Values</label>
                         <input type="checkbox" id="aggregate" name="aggregate" onChange={this.onToggle}></input>
+                        <label for="crosshair" style={{paddingLeft: "10px"}}>Crosshair</label>
+                        <input type="checkbox" id="crosshair" name="crosshair" onChange={this.onToggle}></input>
                     </div>
                     <br/>
                     {this.formBuild("listOfSeries", "List of Series", this.props.seriesOptions)}

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import Chart, {ArgumentAxis, CommonSeriesSettings, Grid, Legend, Margin, Series, Tooltip, Export} from 'devextreme-react/chart'
+import Chart, {ArgumentAxis, CommonSeriesSettings, Grid, Legend, Margin, Series, Tooltip, Export, Crosshair} from 'devextreme-react/chart'
 import PieChart, {
     Series as PSeries,
     Label as PLabel,
@@ -44,6 +44,7 @@ class UrbanGraph extends React.Component {
                 <ArgumentAxis valueMarginsEnabled={true} discreteAxisDivisionMode="crossLabels">
                     <Grid visible={true}/>
                 </ArgumentAxis>
+                <Crosshair enabled={this.props.crosshair} color="#949494" width={2} dashStyle="line"/>
                 <Margin bottom={20}/>
                 <Legend verticalAlignment="top" horizontalAlignment="center" itemTextPosition="top"/>
                 <Tooltip enabled={true}/>
@@ -98,12 +99,14 @@ UrbanGraph.propTypes = {
     argumentAxis: PropTypes.string, //for line graphs's y-axis, and when pie's value has number in it already
     title: PropTypes.string,
     aggregate: PropTypes.bool,
-    export: PropTypes.bool
+    export: PropTypes.bool,
+    crosshair: PropTypes.bool
 }
 
 UrbanGraph.defaultProps = {
     export: false,
     aggregate: false,
+    crosshair: false,
     graphType: "line",
     colourTheme: "Bright"
 }
